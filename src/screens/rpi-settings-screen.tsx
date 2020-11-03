@@ -3,6 +3,7 @@ import React, {useCallback, useState} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {Button, Input, Text} from 'react-native-elements';
 import {useConfig} from '../config/use-config';
+import {NavigationConsts} from '../consts/navigation-consts';
 
 export const RPiSettingsScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -20,7 +21,7 @@ export const RPiSettingsScreen: React.FC = () => {
   const saveSettings = async () => {
     if (rPiIPAddress) {
       await setConfig('RPI_ADDRESS', rPiIPAddress);
-      navigation.navigate('ViewDoorbell');
+      navigation.navigate(NavigationConsts.VIEW_DOORBELL);
     }
   };
 
