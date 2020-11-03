@@ -1,13 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  View,
-  SafeAreaView,
-  Button,
-  StyleSheet,
-  ToastAndroid,
-} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ToastAndroid} from 'react-native';
+import {Button} from 'react-native-elements';
 
 import {
   RTCPeerConnection,
@@ -224,7 +219,7 @@ export function ViewDoorbellScreen() {
       {localStream && (
         <View style={styles.toggleButtons}>
           <Button
-            title={`${isMuted ? 'Unmute' : 'Mute'} stream`}
+            title={`${isMuted ? 'Unmute' : 'Mute'}`}
             onPress={toggleMute}
             disabled={!remoteStream}
           />
@@ -242,6 +237,7 @@ export function ViewDoorbellScreen() {
         )}
       </View>
       <Button
+        buttonStyle={{backgroundColor: 'red'}}
         title="Click to stop call"
         onPress={closeStreams}
         disabled={!remoteStream}
@@ -251,24 +247,22 @@ export function ViewDoorbellScreen() {
 }
 
 const styles = StyleSheet.create({
+  btnHangup: {
+    color: 'red',
+  },
   container: {
-    backgroundColor: '#313131',
     justifyContent: 'space-between',
     alignItems: 'center',
     height: '100%',
-  },
-  text: {
-    fontSize: 30,
   },
   rtcview: {
     justifyContent: 'center',
     alignItems: 'center',
     height: '40%',
     width: '80%',
-    backgroundColor: 'black',
   },
   rtc: {
-    width: '80%',
+    width: '100%',
     height: '100%',
   },
   toggleButtons: {
