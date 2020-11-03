@@ -1,5 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {View, SafeAreaView, StyleSheet, ToastAndroid} from 'react-native';
 import {Button} from 'react-native-elements';
@@ -15,11 +13,10 @@ import {
   RTCIceCandidateType,
   RTCSessionDescription,
 } from 'react-native-webrtc';
+import {useConfig} from '../config/use-config';
 
 export function ViewDoorbellScreen() {
-  const navigation = useNavigation();
-
-  const [rpiAddress, setRpiAddress] = React.useState<string | null>(null);
+  const [config] = useConfig();
   const [ws, setWS] = React.useState<WebSocket | null>(null);
   const [localStream, setLocalStream] = React.useState<MediaStream>();
   const [remoteStream, setRemoteStream] = React.useState<MediaStream>();
@@ -43,22 +40,6 @@ export function ViewDoorbellScreen() {
     console.log('➡️ Sending message: ', msg);
     ws?.send(JSON.stringify(msg));
   };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      async function getRpiAddress() {
-        const value = await AsyncStorage.getItem('@rpi_address');
-        if (value === null) {
-          ToastAndroid.show(
-            'You need to set your RPi address first',
-            ToastAndroid.LONG,
-          );
-          navigation.navigate('RPiSettings');
-        } else setRpiAddress(value);
-      }
-      getRpiAddress();
-    }, []),
-  );
 
   React.useEffect(() => {
     if (!ws) return;
@@ -113,6 +94,14 @@ export function ViewDoorbellScreen() {
   }, [localPC]);
 
   const startLocalStream = async () => {
+    if (!config?.rPi.rPiIPAddress) {
+      ToastAndroid.showWithGravity(
+        'You need to set RPi IP address first.',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+      );
+      return;
+    }
     // isFront will determine if the initial camera should face user or environment
     // const isFront = true;
     // const devices = await mediaDevices.enumerateDevices();
@@ -144,11 +133,16 @@ export function ViewDoorbellScreen() {
     // newStream.getTracks().forEach(track => localPC.addTrack(track, newStream));
     const newLocalPC = new RTCPeerConnection({
       iceServers: [
-        {urls: ['stun:stun.l.google.com:19302', `stun:${rpiAddress}:3478`]},
+        {
+          urls: [
+            'stun:stun.l.google.com:19302',
+            `stun:${config?.rPi.rPiIPAddress}:3478`,
+          ],
+        },
       ],
     });
     setLocalPC(newLocalPC);
-    setWS(new WebSocket(`ws://${rpiAddress}:8080/stream/webrtc`));
+    setWS(new WebSocket(`ws://${config?.rPi.rPiIPAddress}:8080/stream/webrtc`));
   };
 
   // Mutes the local's outgoing audio

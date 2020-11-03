@@ -1,28 +1,27 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useCallback, useState} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {Button, Input, Text} from 'react-native-elements';
+import {useConfig} from '../config/use-config';
+import {NavigationConsts} from '../consts/navigation-consts';
 
 export const RPiSettingsScreen: React.FC = () => {
   const navigation = useNavigation();
 
-  const [rPiIPAddress, setRPiIPAddress] = useState<string>();
+  const [rPiIPAddress, setRPiIPAddress] = useState<string>('');
+  const [config, _, setConfig] = useConfig();
 
   useFocusEffect(
     useCallback(() => {
-      async function getCurrentRPiIPAddress() {
-        const ip = await AsyncStorage.getItem('@rpi_address');
-        setRPiIPAddress(ip || '');
-      }
-      getCurrentRPiIPAddress();
-    }, []),
+      if (!config) return;
+      setRPiIPAddress(config.rPi.rPiIPAddress || '');
+    }, [config]),
   );
 
   const saveSettings = async () => {
     if (rPiIPAddress) {
-      await AsyncStorage.setItem('@rpi_address', rPiIPAddress);
-      navigation.navigate('ViewDoorbell');
+      await setConfig('RPI_ADDRESS', rPiIPAddress);
+      navigation.navigate(NavigationConsts.VIEW_DOORBELL);
     }
   };
 
