@@ -1,18 +1,14 @@
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {ViewDoorbellScreen} from './src/screens/view-doorbell-screen';
-import {RPiSettingsScreen} from './src/screens/rpi-settings-screen';
-
-const Stack = createStackNavigator();
+import {ThemeProvider} from 'react-native-elements';
+import {useColorScheme} from 'react-native';
+import {MainNavigator} from './src/navigation/main-navigator';
 
 export function App() {
+  let colorScheme = useColorScheme();
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="ViewDoorbell" component={ViewDoorbellScreen} />
-        <Stack.Screen name="RPiSettings" component={RPiSettingsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider useDark={colorScheme === 'dark'}>
+      <MainNavigator />
+    </ThemeProvider>
   );
 }

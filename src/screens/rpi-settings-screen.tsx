@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useCallback, useState} from 'react';
-import {Button, SafeAreaView, Text, TextInput, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
+import {Button, Input, Text} from 'react-native-elements';
 
 export const RPiSettingsScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -29,8 +30,12 @@ export const RPiSettingsScreen: React.FC = () => {
     <SafeAreaView>
       <Text>Settings</Text>
       <View>
-        <Text>RPi IP address</Text>
-        <TextInput value={rPiIPAddress} onChangeText={setRPiIPAddress} />
+        <Input
+          label="RPi IP address"
+          placeholder="x.x.x.x"
+          value={rPiIPAddress}
+          onChangeText={setRPiIPAddress}
+        />
         <Button title="Save settings" onPress={saveSettings} />
       </View>
     </SafeAreaView>
