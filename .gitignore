@@ -56,6 +56,9 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
+# Firebase
+android/app/google-services.json
+
 # Bundle artifact
 *.jsbundle
 
