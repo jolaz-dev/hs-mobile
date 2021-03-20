@@ -1,12 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-  ToastAndroid,
-  Button,
-} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ToastAndroid, Button} from 'react-native';
 
 import {
   RTCPeerConnection,
@@ -19,20 +13,16 @@ import {
   RTCIceCandidateType,
   RTCSessionDescription,
 } from 'react-native-webrtc';
-import {useConfig} from '../config/use-config';
+import {getConfiguration} from '../configuration';
 import {NavigationConsts} from '../consts/navigation-consts';
 
 export function ViewDoorbellScreen() {
-  const [config] = useConfig();
   const [ws, setWS] = React.useState<WebSocket | null>(null);
+  const [rPiIPAddress, setRPiAddress] = React.useState<string | null>(null);
   const [localStream, setLocalStream] = React.useState<MediaStream>();
   const [remoteStream, setRemoteStream] = React.useState<MediaStream>();
-  const [remoteICECandidates, setRemoteICECandidates] = React.useState<
-    RTCIceCandidateType[]
-  >([]);
-  const [isRemoteDescriptionSet, setIsRemoteDescriptionSet] = React.useState(
-    false,
-  );
+  const [remoteICECandidates, setRemoteICECandidates] = React.useState<RTCIceCandidateType[]>([]);
+  const [isRemoteDescriptionSet, setIsRemoteDescriptionSet] = React.useState(false);
   // You'll most likely need to use a STUN server at least. Look into TURN and decide if that's necessary for your project
   const [localPC, setLocalPC] = React.useState<RTCPeerConnection | null>(null);
 
@@ -107,12 +97,9 @@ export function ViewDoorbellScreen() {
   }, [localPC]);
 
   const startLocalStream = async () => {
-    if (!config?.rPi.rPiIPAddress) {
-      ToastAndroid.showWithGravity(
-        'You need to set RPi IP address first.',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-      );
+    setRPiAddress(await getConfiguration('RPI_ADDRESS'));
+    if (!rPiIPAddress) {
+      ToastAndroid.showWithGravity('You need to set RPi IP address first.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
       return;
     }
     // isFront will determine if the initial camera should face user or environment
@@ -147,15 +134,12 @@ export function ViewDoorbellScreen() {
     const newLocalPC = new RTCPeerConnection({
       iceServers: [
         {
-          urls: [
-            'stun:stun.l.google.com:19302',
-            `stun:${config?.rPi.rPiIPAddress}:3478`,
-          ],
+          urls: ['stun:stun.l.google.com:19302', `stun:${rPiIPAddress}:3478`],
         },
       ],
     });
     setLocalPC(newLocalPC);
-    setWS(new WebSocket(`ws://${config?.rPi.rPiIPAddress}:8080/stream/webrtc`));
+    setWS(new WebSocket(`ws://${rPiIPAddress}:8080/stream/webrtc`));
   };
 
   // Mutes the local's outgoing audio
@@ -212,24 +196,12 @@ export function ViewDoorbellScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {!localStream && (
-        <Button title="Click to start stream" onPress={startLocalStream} />
-      )}
-      {localStream && (
-        <Button
-          title="Click to start call"
-          onPress={startCall}
-          disabled={!!remoteStream}
-        />
-      )}
+      {!localStream && <Button title="Click to start stream" onPress={startLocalStream} />}
+      {localStream && <Button title="Click to start call" onPress={startCall} disabled={!!remoteStream} />}
 
       {localStream && (
         <View style={styles.toggleButtons}>
-          <Button
-            title={`${isMuted ? 'Unmute' : 'Mute'}`}
-            onPress={toggleMute}
-            disabled={!remoteStream}
-          />
+          <Button title={`${isMuted ? 'Unmute' : 'Mute'}`} onPress={toggleMute} disabled={!remoteStream} />
         </View>
       )}
 
@@ -239,20 +211,10 @@ export function ViewDoorbellScreen() {
         </View>
       )} */}
       <View style={styles.rtcview}>
-        {remoteStream && (
-          <RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />
-        )}
+        {remoteStream && <RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
       </View>
-      <Button
-        title="Click to stop call"
-        onPress={closeStreams}
-        disabled={!remoteStream}
-      />
-      <Button
-        title="Settings"
-        onPress={goToSettings}
-        disabled={remoteStream !== undefined}
-      />
+      <Button title="Click to stop call" onPress={closeStreams} disabled={!remoteStream} />
+      <Button title="Settings" onPress={goToSettings} disabled={remoteStream !== undefined} />
     </SafeAreaView>
   );
 }

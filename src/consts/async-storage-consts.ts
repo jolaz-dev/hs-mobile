@@ -1,7 +1,7 @@
 export type AsyncStorageConstsType = {
-    RPI_ADDRESS: string
-}
+  RPI_ADDRESS: string;
+};
 
-export const AsyncStorageConsts : AsyncStorageConstsType = {
-    RPI_ADDRESS: '@rpi_address'
-}
+export const AsyncStorageConstsKeys: AsyncStorageConstsType = {
+  RPI_ADDRESS: '@rpi_address',
+};
