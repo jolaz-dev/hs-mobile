@@ -1,6 +1,12 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, SafeAreaView, StyleSheet, ToastAndroid} from 'react-native';
-import {Button} from 'react-native-elements';
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  ToastAndroid,
+  Button,
+} from 'react-native';
 
 import {
   RTCPeerConnection,
@@ -14,6 +20,7 @@ import {
   RTCSessionDescription,
 } from 'react-native-webrtc';
 import {useConfig} from '../config/use-config';
+import {NavigationConsts} from '../consts/navigation-consts';
 
 export function ViewDoorbellScreen() {
   const [config] = useConfig();
@@ -30,6 +37,12 @@ export function ViewDoorbellScreen() {
   const [localPC, setLocalPC] = React.useState<RTCPeerConnection | null>(null);
 
   const [isMuted, setIsMuted] = React.useState(false);
+
+  const navigation = useNavigation();
+
+  const goToSettings = () => {
+    navigation.navigate(NavigationConsts.RPI_SETTINGS);
+  };
 
   const send = (what: string, data?: any, options?: any) => {
     const msg = {
@@ -52,7 +65,7 @@ export function ViewDoorbellScreen() {
       });
     };
 
-    ws.onmessage = (ev) => {
+    ws.onmessage = ev => {
       const msg = JSON.parse(ev.data);
 
       switch (msg.what) {
@@ -73,7 +86,7 @@ export function ViewDoorbellScreen() {
           break;
       }
     };
-    ws.onerror = (err) => {
+    ws.onerror = err => {
       console.error('🛑 Error on WebSocket: ', err);
     };
   }, [ws]);
@@ -81,12 +94,12 @@ export function ViewDoorbellScreen() {
   React.useEffect(() => {
     if (!localPC) return;
     // could also use "addEventListener" for these callbacks, but you'd need to handle removing them as well
-    localPC.onicecandidate = (e) => {
+    localPC.onicecandidate = e => {
       if (e.candidate) {
         send('addIceCandidate', e.candidate);
       }
     };
-    localPC.onaddstream = (ev) => {
+    localPC.onaddstream = ev => {
       console.log('🎞️ Adding stream:', ev);
       setRemoteStream(ev.stream);
     };
@@ -148,7 +161,7 @@ export function ViewDoorbellScreen() {
   // Mutes the local's outgoing audio
   const toggleMute = () => {
     if (!remoteStream) return;
-    localStream?.getAudioTracks().forEach((track) => {
+    localStream?.getAudioTracks().forEach(track => {
       console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
       track.enabled = !track.enabled;
       setIsMuted(!track.enabled);
@@ -191,7 +204,7 @@ export function ViewDoorbellScreen() {
     setRemoteICECandidates([...remoteICECandidates, newCandidate]);
 
     if (isRemoteDescriptionSet) {
-      remoteICECandidates.forEach((candidate) => {
+      remoteICECandidates.forEach(candidate => {
         localPC?.addIceCandidate(new RTCIceCandidate(candidate));
       });
     }
@@ -231,10 +244,14 @@ export function ViewDoorbellScreen() {
         )}
       </View>
       <Button
-        buttonStyle={{backgroundColor: 'red'}}
         title="Click to stop call"
         onPress={closeStreams}
         disabled={!remoteStream}
+      />
+      <Button
+        title="Settings"
+        onPress={goToSettings}
+        disabled={remoteStream !== undefined}
       />
     </SafeAreaView>
   );

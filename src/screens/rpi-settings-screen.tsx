@@ -1,7 +1,6 @@
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useCallback, useState} from 'react';
-import {SafeAreaView, View} from 'react-native';
-import {Button, Input, Text} from 'react-native-elements';
+import {Button, SafeAreaView, Text, TextInput, View} from 'react-native';
 import {useConfig} from '../config/use-config';
 import {NavigationConsts} from '../consts/navigation-consts';
 
@@ -29,8 +28,8 @@ export const RPiSettingsScreen: React.FC = () => {
     <SafeAreaView>
       <Text>Settings</Text>
       <View>
-        <Input
-          label="RPi IP address"
+        <Text>RPi IP address</Text>
+        <TextInput
           placeholder="x.x.x.x"
           value={rPiIPAddress}
           onChangeText={setRPiIPAddress}
