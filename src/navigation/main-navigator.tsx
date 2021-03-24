@@ -3,14 +3,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {RPiSettingsScreen} from '../screens/rpi-settings-screen';
 import {ViewDoorbellScreen} from '../screens/view-doorbell-screen';
 import {NavigationConsts} from '../consts/navigation-consts';
-import {CallingScreen} from '../components/calling';
 
 const Stack = createStackNavigator();
 
 export const MainNavigator: React.FC = () => {
   return (
     <>
-      <Stack.Navigator initialRouteName={NavigationConsts.RPI_SETTINGS}>
+      <Stack.Navigator initialRouteName={NavigationConsts.VIEW_DOORBELL}>
         <Stack.Screen
           name={NavigationConsts.VIEW_DOORBELL}
           component={ViewDoorbellScreen}
