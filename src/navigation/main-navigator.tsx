@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 export const MainNavigator: React.FC = () => {
   return (
     <>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={NavigationConsts.VIEW_DOORBELL}>
         <Stack.Screen
           name={NavigationConsts.VIEW_DOORBELL}
           component={ViewDoorbellScreen}
