@@ -5487,10 +5487,10 @@ react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-callkeep@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-callkeep/-/react-native-callkeep-4.0.1.tgz#533e0b8a0cf0ebe4600c5e3186ee324deb24cee1"
-  integrity sha512-TCzIL4Yc8yGqhk84tQW8BAFuoiNNC64J2fkyMFfKd/sDGvIKveEC/JvzzgmMMibQY9J85ful64FyWuvGU1XODw==
+react-native-callkeep@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-callkeep/-/react-native-callkeep-4.1.0.tgz#58b796bf0d8ae46e0fdd968ab36e451103ddd345"
+  integrity sha512-pEIrTQVT40+mc3oGvkLpFjfzzCxkTYjJq9emLxHGZ/k4Ig8amasQTqgdA6SZK+1z4R686eoAX2kHZfR+qmesjg==
 
 react-native-codegen@^0.0.6:
   version "0.0.6"
