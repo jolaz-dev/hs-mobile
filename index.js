@@ -36,4 +36,5 @@ RNCallKeep.setAvailable(true);
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Message handled in the background!', remoteMessage);
+    RNCallKeep.displayIncomingCall(remoteMessage.messageId, "5694", "Portão", "generic");
   });
