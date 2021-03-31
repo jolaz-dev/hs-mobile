@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ScaledSheet} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {t} from '../../i18n';
+import LocalizationContext from '../../i18n/context';
 import {getGlobalStyle} from '../../style';
 import {AppColors} from '../../style/colors';
 import {isDarkModeSelected} from '../../style/is-dark-mode-selected';
 
 export function HomeScreen() {
+  const {t} = useContext(LocalizationContext);
+
   const renderButton = (iconName: string, buttonText: string) => {
     return (
       <TouchableOpacity style={styles.iconBox}>
@@ -20,10 +24,10 @@ export function HomeScreen() {
     <SafeAreaView style={globalStyle.container}>
       <View>
         <View style={styles.iconsContainer}>
-          {renderButton('camera-front-variant', 'View doorbell')}
-          {renderButton('gate', 'Main gate')}
+          {renderButton('camera-front-variant', t('ViewDoorBell'))}
+          {renderButton('gate', t('MainGate'))}
         </View>
-        <View style={styles.iconsContainer}>{renderButton('cog', 'Settings')}</View>
+        <View style={styles.iconsContainer}>{renderButton('cog', t('Settings'))}</View>
       </View>
     </SafeAreaView>
   );
