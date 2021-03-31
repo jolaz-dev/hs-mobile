@@ -1,4 +1,7 @@
 export const NavigationConsts = {
-    VIEW_DOORBELL: "ViewDoorbell",
-    RPI_SETTINGS: "RPiSettings"
-}
+  MAIN: 'Main',
+  HOME: 'Home',
+  VIEW_DOORBELL: 'ViewDoorbell',
+  SETTINGS: 'Settings',
+  RPI_SETTINGS: 'RPiSettings',
+};
