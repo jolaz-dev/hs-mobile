@@ -1,8 +1,9 @@
 import React, {useCallback, useEffect} from 'react';
 import {StatusBar} from 'react-native';
 import i18n from 'i18n-js';
-import messaging from '@react-native-firebase/messaging';
 import RNCallKeep from 'react-native-callkeep';
+import messaging from '@react-native-firebase/messaging';
+import * as RNLocalize from 'react-native-localize';
 import {NavigationContainer} from '@react-navigation/native';
 import {CallingScreen} from './components/calling';
 import {MainNavigator} from './navigation';
@@ -36,6 +37,11 @@ export function App() {
 
   useEffect(() => {
     handleLocalizationChange();
+
+    RNLocalize.addEventListener('change', handleLocalizationChange);
+    return () => {
+      RNLocalize.removeEventListener('change', handleLocalizationChange);
+    };
   }, []);
 
   useEffect(() => {
