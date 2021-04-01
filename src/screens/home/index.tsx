@@ -1,33 +1,23 @@
 import React, {useContext} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {SafeAreaView, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {t} from '../../i18n';
 import LocalizationContext from '../../i18n/context';
 import {getGlobalStyle} from '../../style';
-import {AppColors} from '../../style/colors';
-import {isDarkModeSelected} from '../../style/is-dark-mode-selected';
+import {HomeButton} from './home-button';
 
 export function HomeScreen() {
   const {t} = useContext(LocalizationContext);
 
-  const renderButton = (iconName: string, buttonText: string) => {
-    return (
-      <TouchableOpacity style={styles.iconBox}>
-        <Icon name={iconName} style={styles.icon} />
-        <Text style={styles.buttonText}>{buttonText}</Text>
-      </TouchableOpacity>
-    );
-  };
   return (
     <SafeAreaView style={globalStyle.container}>
       <View>
         <View style={styles.iconsContainer}>
-          {renderButton('camera-front-variant', t('ViewDoorBell'))}
-          {renderButton('gate', t('MainGate'))}
+          <HomeButton iconName="camera-front-variant" buttonText={t('ViewDoorBell')} />
+          <HomeButton iconName="gate" buttonText={t('MainGate')} />
         </View>
-        <View style={styles.iconsContainer}>{renderButton('cog', t('Settings'))}</View>
+        <View style={styles.iconsContainer}>
+          <HomeButton iconName="cog" buttonText={t('Settings')} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -39,31 +29,5 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  iconBox: {
-    alignItems: 'center',
-    margin: '10@ms',
-    borderWidth: 1,
-    borderColor: AppColors.Gunmetal,
-    borderRadius: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.36,
-    shadowRadius: 6.68,
-
-    elevation: 11,
-    backgroundColor: isDarkModeSelected() ? AppColors.Manatee : AppColors.Gunmetal,
-  },
-  icon: {
-    fontSize: '70@ms',
-    margin: '15@ms',
-    color: '#fff',
-  },
-  buttonText: {
-    marginBottom: '4@ms',
-    color: '#fff',
   },
 });
