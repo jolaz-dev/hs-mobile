@@ -1,5 +1,7 @@
 {
-    "ViewDoorBell": "Ver câmera",
+    "Main": "Início",
+    "Doorbell": "Videoporteiro",
+    "ViewDoorbell": "Ver câmera",
     "MainGate": "Portão principal",
     "Settings": "Configurações"
 }

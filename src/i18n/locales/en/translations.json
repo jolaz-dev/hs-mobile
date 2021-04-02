@@ -1,5 +1,7 @@
 {
-    "ViewDoorBell": "View doorbell",
+    "Main": "Main",
+    "Doorbell": "Doorbell",
+    "ViewDoorbell": "View doorbell",
     "MainGate": "MainGate",
     "Settings": "Settings"
 }

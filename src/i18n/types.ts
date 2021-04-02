@@ -12,7 +12,9 @@ export type Language = {
 };
 
 export type LanguageTokens = {
-  ViewDoorBell: string;
+  Main: string;
+  Doorbell: string;
+  ViewDoorbell: string;
   MainGate: string;
   Settings: string;
 };
