@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TouchableOpacity} from 'react-native';
+import {GestureResponderEvent, Text, TouchableOpacity} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AppColors} from '../../style/colors';
@@ -8,11 +8,12 @@ import {isDarkModeSelected} from '../../style/is-dark-mode-selected';
 interface Props {
   iconName: string;
   buttonText: string;
+  onPress?: (ev: GestureResponderEvent) => void;
 }
 
-export function HomeButton({iconName, buttonText}: Props) {
+export function HomeButton({iconName, buttonText, onPress}: Props) {
   return (
-    <TouchableOpacity style={styles.iconBox}>
+    <TouchableOpacity style={styles.iconBox} onPress={onPress}>
       <Icon name={iconName} style={styles.icon} />
       <Text style={styles.buttonText}>{buttonText}</Text>
     </TouchableOpacity>
