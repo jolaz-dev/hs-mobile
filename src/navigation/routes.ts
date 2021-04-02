@@ -1,3 +1,5 @@
+import {t} from '../i18n';
+
 class Route {
   _name: string;
   _displayName?: string;
@@ -18,4 +20,5 @@ class Route {
 
 export const AppRoutes = {
   home: new Route('Home', 'JoLAZ - Home Security'),
+  settings: new Route('Settings', t('Settings')),
 };

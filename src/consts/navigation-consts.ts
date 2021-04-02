@@ -3,5 +3,4 @@ export const NavigationConsts = {
   HOME: 'Home',
   VIEW_DOORBELL: 'ViewDoorbell',
   SETTINGS: 'Settings',
-  RPI_SETTINGS: 'RPiSettings',
 };
