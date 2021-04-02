@@ -19,7 +19,7 @@ export function MainStackHeader(props: StackHeaderProps) {
       <TouchableOpacity onPress={toggleDrawer}>
         <Icon name="menu" size={moderateScale(30)} color={AppColors.AliceBlue} />
       </TouchableOpacity>
-      <Text style={styles.title}>{props.scene.route.name}</Text>
+      <Text style={styles.title}>{props.scene.descriptor.options.headerTitle}</Text>
     </View>
   );
 }
