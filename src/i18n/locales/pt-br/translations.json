@@ -3,5 +3,7 @@
     "Doorbell": "Videoporteiro",
     "ViewDoorbell": "Ver câmera",
     "MainGate": "Portão principal",
-    "Settings": "Configurações"
+    "Settings": "Configurações",
+    "RPiIPAddress": "End. IP do Raspberry Pi",
+    "Save": "Salvar"
 }

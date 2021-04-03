@@ -3,5 +3,7 @@
     "Doorbell": "Doorbell",
     "ViewDoorbell": "View doorbell",
     "MainGate": "MainGate",
-    "Settings": "Settings"
+    "Settings": "Settings",
+    "RPiIPAddress": "Raspberry Pi IP Address",
+    "Save": "Save"
 }

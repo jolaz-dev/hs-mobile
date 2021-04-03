@@ -17,6 +17,8 @@ export type LanguageTokens = {
   ViewDoorbell: string;
   MainGate: string;
   Settings: string;
+  RPiIPAddress: string;
+  Save: string;
 };
 
 export interface LocalizationContextType {
